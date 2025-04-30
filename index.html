@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerikeri Waterfalls - Discover Nature's Beauty</title>
+    <style>
+        :root {
+            --primary-color: #005f73;
+            --secondary-color: #0a9396;
+            --accent-color: #94d2bd;
+            --light-color: #e9f5db;
+            --dark-color: #001219;
+            --text-color: #333333;
+            --background-color: #fdfcf9;
+            --highlight-color: #ee9b00;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Palatino', 'Palatino Linotype', serif;
+            font-weight: normal;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Header */
+        .header {
+            position: relative;
+            height: 100vh;
+            min-height: 500px;
+            color: white;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0, 18, 25, 0.4), rgba(0, 18, 25, 0.6)), 
+                url('/api/placeholder/1600/900') no-repeat center center/cover;
+            z-index: -1;
+        }
+        
+        .water-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20%;
+            background: 
+                linear-gradient(rgba(255, 255, 255, 0), rgba(0, 95, 115, 0.6));
+            z-index: -1;
+        }
+        
+        .header-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 90%;
+            max-width: 800px;
+        }
+        
+        .header-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background-color: var(--dark-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+        .nav-icon {
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: white;
+            background: none;
+            border: none;
+        }
+        
+        /* Main content */
+        .main-content {
+            padding: 4rem 0;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Section styles */
+        .section {
+            padding: 4rem 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            bottom: -10px;
+            left: 20%;
+            background-color: var(--highlight-color);
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Introduction */
+        .intro {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .intro-content {
+            padding: 2rem;
+        }
+        
+        .intro-image {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .intro-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .intro-title {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Waterfall cards */
+        .waterfall-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .waterfall-card {
+            position: relative;
+            height: 450px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .waterfall-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .waterfall-image {
+            height: 60%;
+            overflow: hidden;
+        }
+        
+        .waterfall-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .waterfall-card:hover .waterfall-image img {
+            transform: scale(1.1);
+        }
+        
+        .waterfall-content {
+            padding: 1.5rem;
+            background-color: white;
+            height: 40%;
+            position: relative;
+        }
+        
+        .waterfall-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .waterfall-description {
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .waterfall-link {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            padding: 0.5rem 1.2rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        .waterfall-link:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* Accommodation section */
+        .accommodation {
+            background-color: var(--light-color);
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .accommodation-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .accommodation-text {
+            padding: 2rem;
+        }
+        
+        .accommodation-title {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .accommodation-description {
+            margin-bottom: 2rem;
+        }
+        
+        .accommodation-image {
+            position: relative;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .accommodation-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--highlight-color);
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: #ca8500;
+            transform: translateY(-3px);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+        
+        .footer-description {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .intro, .accommodation-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .intro-image, .accommodation-image {
+                height: 400px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 300px;
+                height: 100vh;
+                background-color: var(--dark-color);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.3s ease;
+                z-index: 1001;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+            
+            .mobile-toggle {
+                display: block;
+                z-index: 1002;
+            }
+            
+            .waterfall-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="logo">
+            <span>Kerikeri Waterfalls</span>
+        </a>
+        <button class="mobile-toggle" id="mobileToggle">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="rainbow-falls.html">Rainbow Falls</a></li>
+            <li><a href="wharepuke-falls.html">Wharepuke Falls</a></li>
+            <li><a href="charlies-rock.html">Charlie's Rock</a></li>
+            <li><a href="fairy-pools.html">Fairy Pools</a></li>
+            <li><a href="te-wairere-falls.html">Te Wairere Falls</a></li>
+        </ul>
+    </nav>
+
+    <header class="header">
+        <div class="header-bg"></div>
+        <div class="water-overlay"></div>
+        <div class="header-content">
+            <h1>Discover Kerikeri's Waterfalls</h1>
+            <p>Explore the hidden gems of Northland's pristine natural landscapes</p>
+            <a href="#waterfalls" class="cta-button">Explore Waterfalls</a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="section">
+            <div class="container">
+                <div class="intro">
+                    <div class="intro-content reveal">
+                        <h2 class="intro-title">Kerikeri's Natural Treasures</h2>
+                        <p>Nestled in the heart of Northland, Kerikeri is blessed with some of New Zealand's most stunning waterfalls. From the majestic Rainbow Falls to the secluded Fairy Pools, these natural wonders offer visitors a chance to connect with nature and experience the raw beauty of the region.</p>
+                        <p>Each waterfall has its own unique character and charm, providing different experiences for nature lovers, photographers, and adventure seekers alike. Some are perfect for swimming on a hot summer day, while others offer peaceful settings for reflection and relaxation.</p>
+                        <p>Our guide will help you discover these hidden gems and make the most of your visit to Kerikeri. Whether you're a local or a visitor, there's always something new to explore in this beautiful part of New Zealand.</p>
+                    </div>
+                    <div class="intro-image reveal">
+                        <img src="/api/placeholder/600/500" alt="Kerikeri Landscape">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="waterfalls">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2 class="section-title">Our Magnificent Waterfalls</h2>
+                    <p class="section-subtitle">Explore these five remarkable waterfalls, each with its own unique character and natural beauty</p>
+                </div>
+
+                <div class="waterfall-grid">
+                    <div class="waterfall-card reveal">
+                        <div class="waterfall-image">
+                            <img src="/api/placeholder/600/400" alt="Rainbow Falls">
+                        </div>
+                        <div class="waterfall-content">
+                            <h3 class="waterfall-title">Rainbow Falls (Waianiwaniwa)</h3>
+                            <p class="waterfall-description">The iconic 27-meter waterfall with its perfect curtain of water, creating rainbows on sunny days.</p>
+                            <a href="rainbow-falls.html" class="waterfall-link">Explore</a>
+                        </div>
+                    </div>
+
+                    <div class="waterfall-card reveal">
+                        <div class="waterfall-image">
+                            <img src="/api/placeholder/600/400" alt="Wharepuke Falls">
+                        </div>
+                        <div class="waterfall-content">
+                            <h3 class="waterfall-title">Wharepuke Falls</h3>
+                            <p class="waterfall-description">A hidden gem surrounded by native bush with a charming cascade flowing over ancient volcanic rock.</p>
+                            <a href="wharepuke-falls.html" class="waterfall-link">Explore</a>
+                        </div>
+                    </div>
+
+                    <div class="waterfall-card reveal">
+                        <div class="waterfall-image">
+                            <img src="/api/placeholder/600/400" alt="Charlie's Rock">
+                        </div>
+                        <div class="waterfall-content">
+                            <h3 class="waterfall-title">Charlie's Rock</h3>
+                            <p class="waterfall-description">A local favorite swimming hole with small cascades and jumps perfect for hot summer days.</p>
+                            <a href="charlies-rock.html" class="waterfall-link">Explore</a>
+                        </div>
+                    </div>
+
+                    <div class="waterfall-card reveal">
+                        <div class="waterfall-image">
+                            <img src="/api/placeholder/600/400" alt="Fairy Pools">
+                        </div>
+                        <div class="waterfall-content">
+                            <h3 class="waterfall-title">Fairy Pools</h3>
+                            <p class="waterfall-description">Series of enchanting small cascades and crystal-clear pools nestled in a magical forest setting.</p>
+                            <a href="fairy-pools.html" class="waterfall-link">Explore</a>
+                        </div>
+                    </div>
+
+                    <div class="waterfall-card reveal">
+                        <div class="waterfall-image">
+                            <img src="/api/placeholder/600/400" alt="Te Wairere Falls">
+                        </div>
+                        <div class="waterfall-content">
+                            <h3 class="waterfall-title">Te Wairere Falls</h3>
+                            <p class="waterfall-description">Stunning waterfall with cultural significance, accessible via a scenic bush track.</p>
+                            <a href="te-wairere-falls.html" class="waterfall-link">Explore</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="accommodation">
+            <div class="container">
+                <div class="accommodation-content">
+                    <div class="accommodation-text reveal">
+                        <h2 class="accommodation-title">Stay at Keri Gold Chalets</h2>
+                        <div class="accommodation-description">
+                            <p>Make the most of your waterfall adventure by staying at the beautiful Keri Gold Chalets. Nestled in the heart of Kerikeri, our comfortable chalets provide the perfect base for exploring all these natural wonders.</p>
+                            <p>Our chalets offer a tranquil retreat after a day of adventure, with all the amenities you need for a comfortable stay. Wake up to birdsong, enjoy breathtaking views, and create memories that will last a lifetime.</p>
+                            <p>With easy access to all of Kerikeri's waterfalls and attractions, Keri Gold Chalets is the ideal choice for nature lovers and adventurers.</p>
+                        </div>
+                        <a href="https://kerigoldchalets.co.nz" class="cta-button">Book Your Stay</a>
+                    </div>
+                    <div class="accommodation-image reveal">
+                        <img src="/api/placeholder/600/400" alt="Keri Gold Chalets">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="footer-logo">Kerikeri Waterfalls</div>
+                    <p class="footer-description">A private blog exploring the natural beauty of Kerikeri's waterfalls and providing information for visitors to the region.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon">FB</a>
+                        <a href="#" class="social-icon">IG</a>
+                        <a href="#" class="social-icon">TW</a>
+                    </div>
+                </div>
+                <div class="footer-links-container">
+                    <h3 class="footer-heading">Waterfalls</h3>
+                    <ul class="footer-links">
+                        <li><a href="rainbow-falls.html">Rainbow Falls</a></li>
+                        <li><a href="wharepuke-falls.html">Wharepuke Falls</a></li>
+                        <li><a href="charlies-rock.html">Charlie's Rock</a></li>
+                        <li><a href="fairy-pools.html">Fairy Pools</a></li>
+                        <li><a href="te-wairere-falls.html">Te Wairere Falls</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-container">
+                    <h3 class="footer-heading">Useful Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://kerigoldchalets.co.nz">Keri Gold Chalets</a></li>
+                        <li><a href="https://kerigoldchalets.co.nz/contact">Contact Us</a></li>
+                        <li><a href="#">About This Blog</a></li>
+                        <li><a href="#">Kerikeri Area Guide</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Kerikeri Waterfalls Guide - A private blog by <a href="https://kerigoldchalets.co.nz">Keri Gold Chalets</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            mobileToggle.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+        
+        // Scroll reveal animation
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+                
+                // Close mobile menu if open
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    mobileToggle.textContent = '☰';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
